@@ -8,7 +8,7 @@ export default function Home() {
       <img className="" src="/app_logo.png" alt="App Logo" />
       <div className="flex justify-center">
         <Button asChild size="lg">
-          <Link href="#">Start Game</Link>
+          <Link href="/start">Start Game</Link>
         </Button>
       </div>
     </div>
