@@ -33,7 +33,7 @@ export default function Home() {
             <Button asChild variant="outline" size="lg">
               <Link href="/multiplayer">Create/Join a group</Link>
             </Button>
-            
+
             <Button
               variant="outline"
               size="lg"
