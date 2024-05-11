@@ -1,7 +1,12 @@
-'use client'
+"use client";
+
+import { useSession } from "next-auth/react";
 
 export default function start() {
-  return (
-    <div>start</div>
-  )
+  const { data } = useSession();
+  if (data) {
+  return <div>loggedin</div>;
+  }else{
+    return <div>not logged in</div>;
+  }
 }
