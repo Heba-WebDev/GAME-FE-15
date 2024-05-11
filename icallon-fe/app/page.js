@@ -4,10 +4,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [showGameOption, setShowGameOption] = useState(false);
+  const router = useRouter();
+  const { data } = useSession();
   return (
     <div className="grid bg-gradient-to-r from-[#1EA8B1] from-5% via-transparent via-50% to-[#1EA8B1] to-95% w-screen h-screen place-content-center p-4 gap-16">
       <img className="" src="/app_logo.png" alt="App Logo" />
@@ -24,15 +27,19 @@ export default function Home() {
         {showGameOption && (
           <div className="grid gap-5 pl-24 pr-24 w-full">
             <Button variant="outline" size="lg">
-              <Link href="/start">Solo Game</Link>
-            </Button>
-
-            <Button variant="outline" size="lg" onClick={() => signIn('google') } >
-              Create/Join a group
+              <Link href="/solo">Solo Game</Link>
             </Button>
 
             <Button asChild variant="outline" size="lg">
-              <Link href="/start">Tornament Mode</Link>
+              <Link href="/multiplayer">Create/Join a group</Link>
+            </Button>
+            
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => (!data ? signIn() : router.push("/tornament"))}
+            >
+              Tornament Mode
             </Button>
           </div>
         )}
