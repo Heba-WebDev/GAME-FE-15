@@ -20,5 +20,6 @@ export const authOptions = {
     //     }
     // })
   ],
+  //added secret
   secret: process.env.AUTH_SECRET
 };
