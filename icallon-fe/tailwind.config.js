@@ -1,3 +1,5 @@
+const { Schoolbell } = require('next/font/google');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -17,6 +19,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily:{
+        Schoolbell:['var(--fuzzy_bubbles)'],
+      },
       colors: {
         border: "var(--border)",
         input: "var(--input)",
