@@ -1,7 +1,7 @@
 // import {NextAuthOptions} from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 
 export const authOptions = {
   providers: [
@@ -27,66 +27,53 @@ export const authOptions = {
         },
       },
       authorize: async (credentials, req) => {
-        const payload = {
-          email: credentials.email,
-          password: credentials.password,
-        };
-
-        // try {
-        //   const user = await axios.post("https://game-be-15.onrender.com/api/v1/players/login",
-        // {
-        //   user: {
-        //     password: credentials.password,
-        //     email: credentials.email
-        //   }
-        // },
-        // {
-        //   headers: {
-        //     accept: '*/*',
-        //     'Content-Type': 'application/json'
-        //   }
-        // })
-        // } catch (error) {
-
-        // }
-        const res = await fetch(
-          "https://game-be-15.onrender.com/api/v1/players/login",
-          {
-            method: "POST",
-            body: JSON.stringify(payload),
-            headers: {
-              "Content-Type": "application/json",
+         const res = await axios
+          .post(
+            "https://game-be-15.onrender.com/api/v1/players/login",
+            {
+              email: credentials.email,
+              password: credentials.password,
             },
-          }
-        );
-        const user = await res.json();
-        if (!res.ok) {
-          throw new Error(user.message);
-        }
-        // checks if response is ok and data is retrieved
-        else if (res.ok && user) {
-          console.log(user.data);
-          const userData = {
-            data: {
-              display_name: user.data.display_name,
-              email: user.data.email,
-              avatar: user.data.avatar,
-              country: user.data.country,
-              games_played: user.data.games_played,
-              games_won: user.data.games_won,
-              points: user.data.points,
-              ranking: user.data.ranking,
-            },
-            token: user.token,
-          };
-          console.log(userData);
-          return userData;
-          // return {status: 'success', data: user.data}
-        }
-        // Return null if user data could not be retrieved
-        else {
-          return null;
-        }
+            {
+              headers: {
+                accept: "*/*",
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            console.log('status code', res.status);
+            if (res.status === HttpStatusCode.Ok) {
+              const user = res.data;
+
+              // checks if response is ok and data is retrieved
+              if (user) {
+                const userData = {
+                  data: {
+                    display_name: user.data.display_name,
+                    email: user.data.email,
+                    avatar: user.data.avatar,
+                    country: user.data.country,
+                    games_played: user.data.games_played,
+                    games_won: user.data.games_won,
+                    points: user.data.points,
+                    ranking: user.data.ranking,
+                  },
+                  token: user.token,
+                };
+                return {userData};
+              }
+              // Return null if user data could not be retrieved
+              else {
+                return (null);
+              }
+            }
+          })
+          .catch((error) => {
+            throw new Error(error.response.data.message);
+          });
+          
+          return res.userData
       },
     }),
   ],

@@ -16,6 +16,7 @@ export default function Home() {
       <img className="" src="/app_logo.png" alt="App Logo" />
       <div className="flex justify-center">
         {!showGameOption && (
+          <>
           <Button
             className="bg-gradient-to-b from-accent via-white/55 to-accent"
             size="lg"
@@ -23,6 +24,9 @@ export default function Home() {
           >
             Start Game
           </Button>
+
+         
+          </>
         )}
         {showGameOption && (
           <div className="grid gap-5 pl-24 pr-24 w-full">
