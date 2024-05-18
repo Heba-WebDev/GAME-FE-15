@@ -2,6 +2,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import axios, { HttpStatusCode } from "axios";
+import { LoginSchema } from "./schemas";
 
 
 export const authOptions = {
@@ -28,12 +29,16 @@ export const authOptions = {
         },
       },
       authorize: async (credentials, req) => {
-         const res = await axios
+        const validatedFields = LoginSchema.safeParse(credentials);
+        if (validatedFields.success){
+          const {email, password} = validatedFields.data;
+
+          const res = await axios
           .post(
             "https://game-be-15.onrender.com/api/v1/players/login",
             {
-              email: credentials.email,
-              password: credentials.password,
+              email: email,
+              password: password,
             },
             {
               headers: {
@@ -75,6 +80,8 @@ export const authOptions = {
           });
           
           return res.userData
+        }
+         
       },
     }),
   ],

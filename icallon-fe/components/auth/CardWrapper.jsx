@@ -17,6 +17,7 @@ export function CardWrapper({
   backButtonLabel,
   backButtonHref,
   showSocial,
+  socialText,
 }) {
   return (
     <Card className="w-[500px]">
@@ -26,7 +27,7 @@ export function CardWrapper({
       <CardContent>{children}</CardContent>
       {showSocial && (
         <CardFooter>
-          <Social />
+          <Social text={socialText} />
         </CardFooter>
       )}
       <CardFooter>

@@ -14,6 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
+import { FormError } from "../ui/formError";
+import { FormSuccess } from "../ui/formSuccess";
 
 export function LoginForm() {
   const form = useForm({
@@ -63,6 +65,8 @@ export function LoginForm() {
             )}
           />
         </div>
+        <FormError message=""/>
+        <FormSuccess message=""/>
         <Button  type="submit" className="w-full">
           Login
         </Button>

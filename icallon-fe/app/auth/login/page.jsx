@@ -26,6 +26,7 @@ export default function login() {
       backButtonLabel="Don't have an account? Sign up"
       backButtonHref="/auth/register"
       showSocial
+      socialText="Login with Google"
     >
       <LoginForm />
     </CardWrapper>
