@@ -19,7 +19,7 @@ const ForgotPassword = () => {
 
   return (   
     <div className="absolute inset-0 flex justify-start items-center bg-transparent">
-      <div className="max-w-md mx-auto p-6 border border-gray-200 rounded-md bg-white shadow-lg">
+      <div className="max-w-md mx-auto p-6 border border-gray-200 rounded-md bg-slate-50/50 shadow-lg">
         <img className="w-24 mx-0 mb-6" src="/app_logo.png" alt="App Logo" />
         <h2 className="text-2xl font-bold">Forgot Password?</h2>
         <p className="text-yellow-500 text-sm mb-6">Enter your email below to receive a password reset link</p>
