@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,8 +22,18 @@ import {
 import { Button } from "../ui/button";
 import { FormError } from "../ui/formError";
 import { FormSuccess } from "../ui/formSuccess";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { register } from "@/app/actions/register";
+import { signIn } from "next-auth/react";
 
 export function RegisterForm() {
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -35,8 +44,26 @@ export function RegisterForm() {
     },
   });
 
-  function onSubmit(data) {
-    console.log(data);
+  async function onSubmit(data) {
+    setError("");
+    setSuccess("");
+    setLoading(true);
+    await register({
+      display_name: data.display_name,
+      email: data.email,
+      password: data.password,
+      country: data.country,
+    }).then((res) => {
+      if (res.error) {
+        setError(res.error);
+      } else if (res.success) {
+        setSuccess(res.success);
+        signIn();
+      } else {
+        setError(res.error);
+      }
+    });
+    setLoading(false);
   }
 
   return (
@@ -50,7 +77,11 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Display Name</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="john ghost" />
+                  <Input
+                    {...field}
+                    disabled={loading}
+                    placeholder="john ghost"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -65,6 +96,7 @@ export function RegisterForm() {
                 <FormControl>
                   <Input
                     {...field}
+                    disabled={loading}
                     placeholder="john@example.com"
                     type="email"
                   />
@@ -80,7 +112,12 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="*********" type="password" />
+                  <Input
+                    {...field}
+                    disabled={loading}
+                    placeholder="*********"
+                    type="password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -95,6 +132,7 @@ export function RegisterForm() {
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled={loading}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -105,7 +143,9 @@ export function RegisterForm() {
                     <SelectItem value="Nigeria">Nigeria</SelectItem>
                     <SelectItem value="Saudi Arabia">Saudi Arabia</SelectItem>
                     <SelectItem value="United States">United States</SelectItem>
-                    <SelectItem value="United kingdom">United kingdom</SelectItem>
+                    <SelectItem value="United kingdom">
+                      United kingdom
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -113,11 +153,18 @@ export function RegisterForm() {
             )}
           />
         </div>
-        <FormError message="" />
-        <FormSuccess message="" />
-        <Button type="submit" className="w-full">
-          Create Account
-        </Button>
+        <FormError message={error} />
+        <FormSuccess message={success} />
+        {loading ? (
+          <Button disabled className="w-full">
+            <ReloadIcon className="mr-2 h-4 w-4 animate-spin " />
+            Please wait
+          </Button>
+        ) : (
+          <Button disabled={loading} type="submit" className="w-full">
+            Create Account
+          </Button>
+        )}
       </form>
     </Form>
   );

@@ -42,13 +42,14 @@ export function LoginForm() {
       email: data.email,
       password: data.password,
       redirect: false,
-      callbackUrl: "/solo"
     }).then((res) => {
       if (res.error) {
         setError(res.error);
-      } else {
+      } else if (res.success) {
         setSuccess("Login Successful");
         router.push("/solo")
+      }else{
+        setError("Something went wrong");
       }
       setLoading(false);
     });
