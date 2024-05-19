@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/lib/schemas/index";
 import { Input } from "@/components/ui/input";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,8 +16,16 @@ import {
 import { Button } from "../ui/button";
 import { FormError } from "../ui/formError";
 import { FormSuccess } from "../ui/formSuccess";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -26,8 +34,24 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit(data){
-    console.log(data)
+  function onSubmit(data) {
+    setLoading(true);
+    setError("");
+    setSuccess("");
+    signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+      callbackUrl: "/solo"
+    }).then((res) => {
+      if (res.error) {
+        setError(res.error);
+      } else {
+        setSuccess("Login Successful");
+        router.push("/solo")
+      }
+      setLoading(false);
+    });
   }
 
   return (
@@ -43,6 +67,7 @@ export function LoginForm() {
                 <FormControl>
                   <Input
                     {...field}
+                    disabled={loading}
                     placeholder="john@example.com"
                     type="email"
                   />
@@ -58,18 +83,30 @@ export function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="*********" type="password" />
+                  <Input
+                    {...field}
+                    disabled={loading}
+                    placeholder="*********"
+                    type="password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <FormError message=""/>
-        <FormSuccess message=""/>
-        <Button  type="submit" className="w-full">
-          Login
-        </Button>
+        <FormError message={error} />
+        <FormSuccess message={success} />
+        {loading ? (
+          <Button disabled className="w-full">
+            <ReloadIcon className="mr-2 h-4 w-4 animate-spin " />
+            Please wait
+          </Button>
+        ) : (
+          <Button disabled={loading} type="submit" className="w-full">
+            Login
+          </Button>
+        )}
       </form>
     </Form>
   );

@@ -5,6 +5,7 @@ import axios, { HttpStatusCode } from "axios";
 import { LoginSchema } from "./schemas";
 
 
+
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -29,16 +30,14 @@ export const authOptions = {
         },
       },
       authorize: async (credentials, req) => {
-        const validatedFields = LoginSchema.safeParse(credentials);
-        if (validatedFields.success){
-          const {email, password} = validatedFields.data;
+        
 
           const res = await axios
           .post(
             "https://game-be-15.onrender.com/api/v1/players/login",
             {
-              email: email,
-              password: password,
+              email: credentials.email,
+              password: credentials.password,
             },
             {
               headers: {
@@ -80,11 +79,19 @@ export const authOptions = {
           });
           
           return res.userData
-        }
+      
          
       },
     }),
   ],
+  pages: {
+    signIn: '/auth/login',
+    signUp: '/auth/register'
+    // signOut: '/auth/signout',
+    // error: '/auth/error', // Error code passed in query string as ?error=
+    // verifyRequest: '/auth/verify-request', // (used for check email message)
+    // newUser: '/auth/register' // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
   //added secret
   secret: process.env.AUTH_SECRET,
   callbacks: {
