@@ -5,7 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export default function Tornament() {
-  const { data, status } = useSession({
+  const { data, status, session } = useSession({
     required: true,
     onUnauthenticated() {
       // The user is not authenticated, handle it here.
@@ -19,6 +19,7 @@ export default function Tornament() {
   return (
     <div>
       loggedin {JSON.stringify(data)}
+      {console.log(data)}
       <Button onClick={() => signOut()}> signout</Button>
     </div>
   );
