@@ -24,7 +24,7 @@ export function CardWrapper({
       <CardHeader>
         <Header label={headerlabel} />
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent className="pb-0">{children}</CardContent>
       {showSocial && (
         <CardFooter>
           <Social text={socialText} />

@@ -4,8 +4,6 @@ import Credentials from "next-auth/providers/credentials";
 import axios, { HttpStatusCode } from "axios";
 import { LoginSchema } from "./schemas";
 
-
-
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -30,14 +28,17 @@ export const authOptions = {
         },
       },
       authorize: async (credentials, req) => {
-        
-
-          const res = await axios
+        const validatedvalues = LoginSchema.safeParse(credentials);
+        console.log(validatedvalues.data);
+        if (!validatedvalues.success) {
+          return { error: "invalid credentials" };
+        }
+        const res = await axios
           .post(
             "https://game-be-15.onrender.com/api/v1/players/login",
             {
-              email: credentials.email,
-              password: credentials.password,
+              email: validatedvalues.data.email,
+              password: validatedvalues.data.password,
             },
             {
               headers: {
@@ -47,7 +48,7 @@ export const authOptions = {
             }
           )
           .then((res) => {
-            console.log('status code', res.status);
+            console.log("status code", res.status);
             if (res.status === HttpStatusCode.Ok) {
               const user = res.data;
 
@@ -66,27 +67,25 @@ export const authOptions = {
                   },
                   token: user.token,
                 };
-                return {userData};
+                return { userData };
               }
               // Return null if user data could not be retrieved
               else {
-                return (null);
+                return null;
               }
             }
           })
           .catch((error) => {
             throw new Error(error.response.data.message);
           });
-          
-          return res.userData
-      
-         
+
+        return res.userData;
       },
     }),
   ],
   pages: {
-    signIn: '/auth/login',
-    signUp: '/auth/register'
+    signIn: "/auth/login",
+    signUp: "/auth/register",
     // signOut: '/auth/signout',
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // (used for check email message)

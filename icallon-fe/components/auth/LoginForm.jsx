@@ -19,6 +19,8 @@ import { FormSuccess } from "../ui/formSuccess";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { HttpStatusCode } from "axios";
+import Link from "next/link";
 
 export function LoginForm() {
   const [error, setError] = useState("");
@@ -43,13 +45,13 @@ export function LoginForm() {
       password: data.password,
       redirect: false,
     }).then((res) => {
-      if (res.error) {
-        setError(res.error);
-      } else if (res.success) {
-        setSuccess("Login Successful");
-        router.push("/solo")
-      }else{
-        setError("Something went wrong");
+      if (res.status == HttpStatusCode.Unauthorized) {
+        setError("invalid login credentials");
+      } else if (res.status == HttpStatusCode.Ok) {
+        setSuccess("Login sucessful");
+        router.push("/");
+      } else {
+        setError("Something went wrong" + res.error);
       }
       setLoading(false);
     });
@@ -57,8 +59,9 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+        <div className="space-y-4 pb-6
+        ">
           <FormField
             control={form.control}
             name="email"
@@ -108,6 +111,12 @@ export function LoginForm() {
             Login
           </Button>
         )}
+        <div className="flex w-full justify-end">
+        <Button variant="link" className=" text-black " size="sm" asChild>
+          <Link href="/forgotpassword">forgot password</Link>
+        </Button>
+        </div>
+        
       </form>
     </Form>
   );

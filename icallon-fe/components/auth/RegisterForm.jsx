@@ -23,7 +23,6 @@ import { Button } from "../ui/button";
 import { FormError } from "../ui/formError";
 import { FormSuccess } from "../ui/formSuccess";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { register } from "@/app/actions/register";
 import { signIn } from "next-auth/react";
@@ -32,7 +31,6 @@ export function RegisterForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(RegisterSchema),
@@ -68,8 +66,8 @@ export function RegisterForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pb-4">
+        <div className="space-y-4 ">
           <FormField
             control={form.control}
             name="display_name"
