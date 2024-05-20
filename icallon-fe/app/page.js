@@ -39,7 +39,7 @@ export default function Home() {
               size="lg"
               onClick={() => (!data ? signIn() : router.push("/tornament"))}
             >
-              Tornament Mode
+              Tournament Mode
             </Button>
           </div>
         )}
