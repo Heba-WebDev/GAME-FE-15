@@ -94,7 +94,13 @@ export const authOptions = {
   //added secret
   secret: process.env.AUTH_SECRET,
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session}) {
+      if (trigger === "update" && session?.user) {
+        token.user = session.user;
+        token.access_token = session.token;
+        return token;
+      }
+
       if (user) {
         token.user = user.data;
         token.access_token = user.token;
