@@ -16,22 +16,32 @@ export default function Home() {
       <img className="" src="/app_logo.png" alt="App Logo" />
       <div className="flex justify-center">
         {!showGameOption && (
-          <Button
-            className="bg-gradient-to-b from-accent via-white/55 to-accent"
-            size="lg"
-            onClick={() => setShowGameOption(true)}
-          >
-            Start Game
-          </Button>
+          <>
+            <Button
+              className="bg-gradient-to-b from-accent via-white/55 to-accent"
+              size="lg"
+              onClick={() => (!data ? signIn() : setShowGameOption(true))}
+            >
+              Start Game
+            </Button>
+          </>
         )}
         {showGameOption && (
           <div className="grid gap-5 pl-24 pr-24 w-full">
-            <Button variant="outline" size="lg">
-              <Link href="/solo">Solo Game</Link>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => (!data ? signIn() : router.push("/solo"))}
+            >
+              Solo Game
             </Button>
 
-            <Button asChild variant="outline" size="lg">
-              <Link href="/multiplayer">Create/Join a group</Link>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => (!data ? signIn() : router.push("/multiplayer"))}
+            >
+              Create/Join a group
             </Button>
 
             <Button
@@ -39,7 +49,7 @@ export default function Home() {
               size="lg"
               onClick={() => (!data ? signIn() : router.push("/tornament"))}
             >
-              Tornament Mode
+              Tournament Mode
             </Button>
           </div>
         )}
