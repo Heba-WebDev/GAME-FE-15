@@ -5,8 +5,6 @@ import axios from "axios";
 
 export const register = async (values) => {
   const validatedvalues = RegisterSchema.safeParse(values);
-
-  console.log(validatedvalues.data)
   try {
     const res = await axios.post(
       "https://game-be-15.onrender.com/api/v1/players/register",

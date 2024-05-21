@@ -1,11 +1,9 @@
 "use client";
 
-// import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [showGameOption, setShowGameOption] = useState(false);
