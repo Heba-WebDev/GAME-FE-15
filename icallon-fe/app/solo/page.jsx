@@ -18,11 +18,12 @@ import logo2 from "/public/app_logo2.svg";
 import sheet from "/public/white_sheet.svg";
 // import sound from "/public/sounds/soft-piano-100-bpm.mp3"
 import { getSession, signIn, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Solo() {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [useAvatar, setUseAvatar] = useState(true);
+  const router = useRouter();
   const { data, status, update } = useSession({
     required: true,
     onUnauthenticated() {
@@ -196,7 +197,7 @@ export default function Solo() {
                 defaultValue={data.user.display_name}
               />
             </div>
-            <Button size="lg" onClick={() => {}}>
+            <Button size="lg" onClick={() => {router.push("/gamesetting")}}>
               Continue
             </Button>
           </div>
