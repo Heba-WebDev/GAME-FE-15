@@ -80,7 +80,7 @@ export default function Solo() {
   ];
 
   return (
-    <>
+    <div className="flex items-center justify-center">
       {useAvatar ? (
         <main className="flex items-center justify-center h-screen gap-20">
           {selectedAvatar === null ? (
@@ -133,7 +133,7 @@ export default function Solo() {
                   key={index}
                   src={avatar.src}
                   alt={avatar.alt}
-                  className="w-28 h-20 cursor-pointer hover:border-[#FC9A02] border"
+                  className="w-28 h-20 cursor-pointer bg-[#8FD4D8] hover:border-[#FC9A02] border"
                   onClick={() => handleAvatarClick(avatar)}
                 />
               ))}
@@ -141,8 +141,9 @@ export default function Solo() {
           </section>
         </main>
       ) : (
-        <main className="p-4 flex justify-between items-center h-screen max-w-[85%] mx-auto">
-          <div className="bg-[#404040] h-[600px] w-52 p-4 flex flex-col justify-between">
+        
+        <main className=" flex justify-between items-center h-screen w-[80%]">
+          <div className="bg-[#404040] h-[80%] w-2/12 p-4 flex flex-col justify-between">
             <div className="flex flex-col items-center gap-4">
               <Image src={logo2} alt="" className="w-36 mx-auto" />
               <Button variant="outline" size="lg">
@@ -175,15 +176,15 @@ export default function Solo() {
               </Button>
             </div>
           </div>
-          <div className="space-y-20">
-            <h1 className="text-5xl text-input">
+          <div className="flex flex-col justify-between pb-[5%] w-2/4 h-[80%] ">
+            <h1 className="text-4xl text-input w-full">
               Enter your preferred username
             </h1>
-            <Image src={sheet} alt="" />
+            <Image src={sheet} alt=""  />
           </div>
-          <div className="flex flex-col items-center justify-between h-[600px]">
-            <div className="space-y-10">
-              {data ? (
+          <div className="flex flex-col items-center justify-between h-[80%] w-2/12  ">
+            <div className=" pt-[50%] space-y-4">
+              {data.user.avatar ? (
                 <Image
                   src={data.user.avatar?.src}
                   alt={data.user.avatar?.alt}
@@ -193,16 +194,17 @@ export default function Solo() {
               )}
               <input
                 type="text"
-                className="focus:outline-none p-2"
+                placeholder="Display Name"
+                className="focus:outline-none p-2 w-full"
                 defaultValue={data.user.display_name}
               />
             </div>
-            <Button size="lg" onClick={() => {router.push("/gamesetting")}}>
+            <Button size="lg" className="w-full font-bold" onClick={() => {router.push("/gamesetting")}}>
               Continue
             </Button>
           </div>
         </main>
       )}
-    </>
+    </div>
   );
 }
