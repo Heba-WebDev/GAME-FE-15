@@ -176,11 +176,11 @@ export default function Solo() {
               </Button>
             </div>
           </div>
-          <div className="flex flex-col justify-between pb-[5%] w-2/4 h-[80%] ">
+          <div className="flex flex-col justify-between w-2/4 h-[80%] ">
             <h1 className="text-4xl text-input w-full">
               Enter your preferred username
             </h1>
-            <Image src={sheet} alt=""  />
+            <Image src={sheet} alt="" className="h-4/5 w-full object-cover" />
           </div>
           <div className="flex flex-col items-center justify-between h-[80%] w-2/12  ">
             <div className=" pt-[50%] space-y-4">
