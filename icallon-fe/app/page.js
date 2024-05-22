@@ -16,7 +16,7 @@ export default function Home() {
         {!showGameOption && (
           <>
             <Button
-              className="bg-gradient-to-b from-accent via-white/55 to-accent"
+              className="bg-gradient-to-b from-accent via-white/55 to-accent px-28 py-9 text-3xl"
               size="lg"
               onClick={() => (!data ? signIn() : setShowGameOption(true))}
             >
