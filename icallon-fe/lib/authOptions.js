@@ -48,7 +48,6 @@ export const authOptions = {
             }
           )
           .then((res) => {
-            console.log("status code", res.status);
             if (res.status === HttpStatusCode.Ok) {
               const user = res.data;
 
@@ -56,6 +55,7 @@ export const authOptions = {
               if (user) {
                 const userData = {
                   data: {
+                    id: user.data.id,
                     display_name: user.data.display_name,
                     email: user.data.email,
                     avatar: user.data.avatar,
@@ -71,14 +71,14 @@ export const authOptions = {
               }
               // Return null if user data could not be retrieved
               else {
-                return null;
+                return (null);
               }
             }
           })
           .catch((error) => {
+            console.log(error.response.data.message);
             throw new Error(error.response.data.message);
           });
-
         return res.userData;
       },
     }),
@@ -94,7 +94,7 @@ export const authOptions = {
   //added secret
   secret: process.env.AUTH_SECRET,
   callbacks: {
-    async jwt({ token, user, trigger, session}) {
+    async jwt({ token, user, trigger, session }) {
       if (trigger === "update" && session?.user) {
         token.user = session.user;
         token.access_token = session.token;

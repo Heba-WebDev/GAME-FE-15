@@ -35,6 +35,7 @@ export default function Solo() {
 
   const handleAvatarClick = (avatar) => {
     setSelectedAvatar(avatar);
+
     // const session = getSession();
     // console.log(session);
   };
@@ -80,42 +81,49 @@ export default function Solo() {
   ];
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center h-screen">
       {useAvatar ? (
-        <main className="flex items-center justify-center h-screen gap-20">
+        <main className="flex items-center justify-around h-4/5 w-full">
           {selectedAvatar === null ? (
             data.user.avatar ? (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col h-full ">
                 <Image
                   src={data.user.avatar.src}
                   alt={data.user.avatar.alt}
-                  className="w-96 h-96"
+                  className="w-2/4 h-full"
                   priority={true}
                 />
+                {setSelectedAvatar(data.user?.avatar)}
                 <Button
+                  className="px-28 py-9 text-3xl"
                   variant="default"
-                  size="default"
+                  size="lg"
                   onClick={handleUseAvatar}
                 >
                   Use Avatar
                 </Button>
               </div>
             ) : (
-              <div className="border-2 border-solid bg-gradient-to-r from-[#1EA8B1] from-5% via-transparent via-50% to-[#1EA8B1] to-95% w-96 h-96 flex justify-center items-center">
-                <Image src={logo} alt="logo" className="w-72" priority={true} />
+              <div className="border-2 border-solid bg-gradient-to-r from-[#1EA8B1] from-5% via-transparent via-50% to-[#1EA8B1] to-95% w-2/5 h-5/6 flex justify-center items-center">
+                <Image
+                  src={logo}
+                  alt="logo"
+                  className="w-4/5"
+                  priority={true}
+                />
               </div>
             )
           ) : (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 w-2/5 h-4/5">
               <Image
                 src={selectedAvatar?.src}
                 alt={selectedAvatar?.alt}
-                className="w-96 h-96"
+                className="w-full h-full object-"
               />
 
               <Button
-                variant="default"
-                size="default"
+                className="px-28 py-9 text-3xl"
+                size="lg"
                 onClick={handleUseAvatar}
               >
                 Use Avatar
@@ -123,17 +131,17 @@ export default function Solo() {
             </div>
           )}
 
-          <section className="w-96">
-            <p className="font-normal text-2xl">
+          <section className="w-2/5 h-4/5">
+            <p className="font-normal text-4xl pb-8">
               Select a base Avatar to get you started
             </p>
-            <div className="flex items-center flex-wrap w-96 gap-4">
+            <div className="grid gap-10 grid-cols-3">
               {avatars.map((avatar, index) => (
                 <Image
                   key={index}
                   src={avatar.src}
                   alt={avatar.alt}
-                  className="w-28 h-20 cursor-pointer bg-[#8FD4D8] hover:border-[#FC9A02] border"
+                  className="w-60 h-36 object-contain cursor-pointer bg-[#8FD4D8] hover:border-[#FC9A02] border"
                   onClick={() => handleAvatarClick(avatar)}
                 />
               ))}
@@ -141,7 +149,6 @@ export default function Solo() {
           </section>
         </main>
       ) : (
-        
         <main className=" flex justify-between items-center h-screen w-[80%]">
           <div className="bg-[#404040] h-[80%] w-2/12 p-4 flex flex-col justify-between">
             <div className="flex flex-col items-center gap-4">
@@ -199,7 +206,13 @@ export default function Solo() {
                 defaultValue={data.user.display_name}
               />
             </div>
-            <Button size="lg" className="w-full font-bold" onClick={() => {router.push("/gamesetting")}}>
+            <Button
+              size="lg"
+              className="w-full font-bold"
+              onClick={() => {
+                router.push("/gamesetting");
+              }}
+            >
               Continue
             </Button>
           </div>
