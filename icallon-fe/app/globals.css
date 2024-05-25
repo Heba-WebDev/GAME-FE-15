@@ -59,3 +59,12 @@
       @apply bg-background text-foreground;
     }
   }
+
+  .gradient {
+  background: linear-gradient(90deg, #1EA8B1 0.29%, #8ED3D8 10.07%, #D2EEEF 33.35%, #D2EEEF 66.17%, #8ED3D8 89.64%, #1EA8B1 99.74%);
+}
+
+.gradient-card {
+  border: 1px solid rgba(0, 0, 0, 0.30);
+  background: linear-gradient(180deg, rgba(143, 212, 216, 0.30) 0%, rgba(210, 238, 239, 0.30) 47%, rgba(143, 212, 216, 0.30) 100%);
+}
