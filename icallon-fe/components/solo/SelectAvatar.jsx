@@ -46,7 +46,7 @@ export default function SelectAvatar({
           />
 
           <Button
-            className="px-28 py-9 text-3xl hidden md:block"
+            className="px-28 py-9 text-3xl  items-center justify-center hidden md:flex"
             size="lg"
             onClick={() => nextPage(currentPage)}
           >
@@ -73,7 +73,7 @@ export default function SelectAvatar({
         </div>
         <div className="flex justify-end">
           <Button
-            className=" px-6 py-2  block md:hidden mt-4"
+            className=" px-6 py-2  flex md:hidden mt-4"
             size="small"
             onClick={() => nextPage(currentPage)}
           >
