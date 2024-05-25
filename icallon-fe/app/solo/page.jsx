@@ -19,9 +19,11 @@ import { redirect } from "next/navigation";
 import SelectAvatar from "@/components/solo/SelectAvatar";
 import SetDisplayName from "@/components/solo/SetDisplayName";
 import SelectDifficulty from "@/components/solo/SelectDifficulty";
+import TypingAnimation from "@/components/solo/TypingAnimation";
 
 export default function Solo() {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [selectedAIAvatar, setSelectedAIAvatar] = useState(null);
   const [showSelectAvatar, setShowSelectAvatar] = useState(true);
   const [showSetDisplayName, setshowSetDisplayName] = useState(false);
   const [showSelectDifficulty, setSelectDifficulty] = useState(false);
@@ -49,22 +51,26 @@ export default function Solo() {
       case showSetDisplayName:
         setshowSetDisplayName(false);
         setShowSelectAvatar(true);
+        setSelectDifficulty(false);
         break;
       case showSelectDifficulty:
-        setSelectDifficulty(true);
         setSelectDifficulty(false);
+        setshowSetDisplayName(true);
+        setShowSelectAvatar(false);
         break;
     }
   }
 
-  function nextPage(currentPage){
+  function nextPage(currentPage) {
     switch (currentPage) {
       case showSelectAvatar:
         updateSessionData();
         setShowSelectAvatar(false);
         setshowSetDisplayName(true);
+        setSelectDifficulty(false);
         break;
       case showSetDisplayName:
+        setShowSelectAvatar(false);
         setshowSetDisplayName(false);
         setSelectDifficulty(true);
         break;
@@ -116,7 +122,16 @@ export default function Solo() {
           goBack={goBack}
         />
       )}
-      {showSelectDifficulty && <SelectDifficulty />}
+      {showSelectDifficulty && (
+        <SelectDifficulty
+          data={data}
+          setSelectedAIAvatar={setSelectedAIAvatar}
+          selectedAIAvatar={selectedAIAvatar}
+          currentPage={showSelectDifficulty}
+          nextPage={nextPage}
+          goBack={goBack}
+        />
+      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import logo2 from "/public/app_logo2.svg";
 import sheet from "/public/white_sheet.svg";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,6 @@ export default function SetDisplayName({
   nextPage,
   goBack,
 }) {
-  const router = useRouter();
 
   return (
     <main className=" flex justify-between items-center h-screen w-[80%]">
