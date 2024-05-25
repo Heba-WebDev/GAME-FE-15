@@ -72,7 +72,7 @@ export default function SelectDifficulty({
           </Button>
         </div>
       </div>
-      <div className="flex flex-col space-y-10 justify-center w-1/3 h-[80%] ">
+      <div className="flex flex-col space-y-4 justify-center w-1/3 h-[80%] ">
         {selectedAIAvatar ? (
           <div className="space-y-10">
             <Image
