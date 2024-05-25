@@ -18,7 +18,7 @@ export default function register() {
   });
 
   function onSubmit(data){
-    console.log(data);
+    //console.log(data);
   }
   return (
     <CardWrapper
