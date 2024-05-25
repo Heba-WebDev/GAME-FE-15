@@ -83,7 +83,7 @@ export default function Solo() {
     "icalon player level",
     "game selection options",
   ];
-  console.log(listOfData);
+  //console.log(listOfData);
 
   if (status === "loading") {
     return <div>Loading....</div>;
